@@ -3,16 +3,16 @@
 #include<ctype.h>
 typedef struct
 {
-	char mname[20],company[20];
+	int id;
+	char mname[20],company[20],mfg[20],exp[20];
 	double qnty,cost;
 }medicine;
 void get_problem(medicine []);
 void show();
 void clear();
-void new_entry();
+void new_entry(medicine []);
 void issue();
-/* char mname[25],company[25];
-        double cost,qnty;*/
+void show_medicine(medicine []);
 void main()
 {
 	medicine data[10];
@@ -22,6 +22,7 @@ void main()
 void get_problem(medicine data[])
 {
 	int ch,ch1,ch2;
+	int i=0;
 	printf("\t\t\t|**************************************|\n");
 	printf("\t\t\t|               MAIN MENU              |\n");
 	printf("\t\t\t|**************************************|\n");
@@ -43,7 +44,7 @@ void get_problem(medicine data[])
 		        printf("\t\t\t|**************************************|\n");
 		        printf("\t\t\t|        1.NEW ENTRY                   |\n");
 		        printf("\t\t\t|                                      |\n");
-		        printf("\t\t\t|        2.RESTORE DAMAGE              |\n");
+		        printf("\t\t\t|        2.SHOW MEDICINE               |\n");
 		        printf("\t\t\t|                                      |\n");
 		        printf("\t\t\t|        3.RETURN DAMAGE               |\n");
 	        	printf("\t\t\t|                                      |\n");
@@ -57,6 +58,17 @@ void get_problem(medicine data[])
 			{
 				case 1:
 					new_entry(data);
+					break;
+				case 2:
+					show_medicine(data);
+					break;
+				case 3:
+				case 4:
+				case 5:
+					get_problem(data);
+					break;
+				default:
+					printf("INVALID CHOICE!!\n\n");
 					break;
 			}
 			printf("\n\n");
@@ -77,9 +89,10 @@ void get_problem(medicine data[])
 				switch(ch2)
 				{
 					case 1:
-//						issue(data);
+						issue(data);
 						break;
 					case 2:
+						get_problem(data);
 						break;
 					default :
 						printf("Inavlid Entry");
@@ -88,10 +101,14 @@ void get_problem(medicine data[])
 				printf("\n\n");
 				break;
 		case 3:
-				printf("\t\t\t******************************************************************");
-				printf("\t\t\tTHIS PROJECT ID DEVELOPED BY :\n");
-				printf("\t\t\t                         ADARSH PADHI\n");
-				printf("\t\t\t******************************************************************");
+				clear();
+				printf("\t\t\t******************************************************************\n");
+				printf("\t\t\tTHIS PROJECT IS DEVELOPED BY :\n");
+				printf("\t\t\t                        	 ADARSH PADHI\n");
+				printf("\t\t\t				 JYOTI RANJAN SAHOO\n");
+				printf("\t\t\t				 ANURADHA RANI CHOUDHRY\n");
+				printf("\t\t\t				 SHRUTI MOHAPATRA\n");
+				printf("\t\t\t******************************************************************\n");
 				break;
 		default:
 				printf("INVALID INPUT !!!");
@@ -125,51 +142,106 @@ void show()
 }
 void new_entry(medicine data[])
 {
-//        char ch,mname[25],company[25];
-//      double cost,qnty;
 	char ch;
+	int i,n;
         clear();
+	printf("\t\t\tHOW MANY ENTRIES:\n");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
         printf("\t\t\t**************************************************\n");
         printf("\t\t\t                     NEW ENTRY                    \n");
         printf("\t\t\t**************************************************\n");
         printf("\t\t\t*****PLEASE  ENTER THE DETAIL OF THE MEDICINE*****\n");
         printf("\t\t\t**************************************************\n");
         printf("\t\t\t\n\n");
+	printf("\t\t\tENTER THE MEDICINE ID:....");
+	scanf("%d",&data[i].id);
+	scanf("%c",&ch);
         printf("\t\t\tENTER THE NAME OF THE MEDICINE:....");
-        scanf("%c",&ch);
-        gets(data[0].mname);
+       	// scanf("%c",&ch);
+        gets(data[i].mname);
         printf("\t\t\tENTER THE COMPANY OF THE MEDICINE:...");
-        gets(data[0].company);
-        //fflush(stdin);
+        gets(data[i].company);
+	printf("\t\t\tENTER THE MANUFACTURE DATE:....");
+	gets(data[i].mfg);
+	printf("\t\t\tENTER THE EXPIRE DATE:...");
+	gets(data[i].exp);
         printf("\t\t\tENTER THE COST OF THE MEDICINE:....");
-        scanf("%lf",&data[0].cost);
+        scanf("%lf",&data[i].cost);
         printf("\t\t\tENTER THE QUANTITY RECIVED:....");
-        scanf("%lf",&data[0].qnty);
+        scanf("%lf",&data[i].qnty);
         printf("\t\t\t**************************************************\n");
         printf("\n\n\n\n\t\t\tMEDICINE ADDED !!! \n");
         printf("\t\t\t**************************************************\n\n\n\n\n");
+	}
         get_problem(data);
 }
-/*void issue()
+void show_medicine(medicine data[])
 {
-        char date[20],name[20],address[20],mname[20];
-        int eqnty;
+	int i;
+        printf("\t\t\t***************************************************************\n");
+        printf("\t\t\t*********************AVAILABLE MEDICINE************************\n");
+        printf("\t\t\t***************************************************************\n");
+        for(i=0;i<2;i++)
+	{
+       	printf("\t\t\t*MEDICINE ID:...%d\n",data[i].id);
+	printf("\t\t\t*NAME:.........");
+	puts(data[i].mname);
+	printf("\t\t\t*COMPANY.........");
+	puts(data[i].company);
+	printf("\t\t\t*MANUFACTURE DATE:....");
+	puts(data[i].mfg);
+	printf("\t\t\t*EXPIRE DATE:....");
+	puts(data[i].exp);
+	printf("\t\t\t*COST:...%0.1lf\n",data[i].cost);
+	printf("\t\t\t*QUANTITY:....%0.1lf\n",data[i].qnty);
+	printf("\t\t\t***************************************************************\n");
+	}
+}
+void issue(medicine data[])
+{
+	clear();
+	show_medicine(data);
+        char ch,cdate[20],cname[20],caddress[20],cmname[20];
+        double eqnty;
         double total;
-        clear();
-        printf("ENTER THE TODAY'S DATE :..\n");
-        gets(date);
-        printf("ENTER CUSTOMER NAME:...\n");
-        gets(name);
-        printf("ENTER CUSTOMER ADDRESS:...\n");
-        gets(address);
-        printf("ENTER MEDICINE NAME:...\n");
-        gets(mname);
-        printf("Enter the quantity Required:\n");
+	int i;
+        printf("\t\t\tENTER THE TODAY'S DATE :...");
+	scanf("%c",&ch);
+        gets(cdate);
+        printf("\t\t\tENTER CUSTOMER NAME:...");
+        gets(cname);
+        printf("\t\t\tENTER CUSTOMER ADDRESS:...");
+        gets(caddress);
+        printf("\t\t\tENTER MEDICINE NAME:...");
+        gets(cmname);
+        printf("\t\t\tEnter the quantity Required:...");
         scanf("%d",&eqnty);
-        if(qnty>eqnty)
-        {
-                total=eqnty*cost;
-                qnty=qnty-eqnty;
-        }
-}*/
+	for(i=0;i<2;i++)
+	{
+		if(strcmp(cmname,data[i].mname)==1)
+		{
+       		 if(data[i].qnty>eqnty)
+       		 {
+               		 total=eqnty*data[i].cost;
+               		 data[i].qnty=data[i].qnty-eqnty;
+       		 }
+		}
+	}
+	printf("\t\t\t**********************YOUR RECEIPT************************\n");
+	printf("\t\t\t**********************************************************\n");
+	printf("\t\t\tNAME:");
+	puts(cname);
+	printf("\t\t\tADDRESS:");
+	puts(caddress);
+	printf("\t\t\t**********************************************************\n");
+	printf("\t\t\t*  MEDICINE NAME           QUANTITY          COST         \n");
+	printf("\t\t\t**********************************************************\n");
+	printf("\t\t\t*");
+	puts(cmname);
+	printf("\t\t\t\t\t\t%.2lf%10c%8.2lf\n",eqnty,' ',total);
+	printf("\t\t\t**********************************************************\n");
+	get_problem(data);
+}
 
